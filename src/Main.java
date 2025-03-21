@@ -14,28 +14,36 @@ public class Main {
         int opcao;
 
         do {
-            System.out.println("************ MENU *************");
-            System.out.println("(1) - Lista dados do carro");
+            System.out.println("\n************ MENU *************");
+            System.out.println("(1) - Listar dados do carro");
             System.out.println("(2) - Cadastrar carro");
-            System.out.println("(3) - Atualizar vaga de carro");
+            System.out.println("(3) - Atualizar vaga de carro (saída)");
             System.out.println("(4) - Sair");
-            System.out.println("*******************************");
+            System.out.println("*");
             System.out.print("Selecione uma opção: ");
             opcao = leitorNumerico.nextInt();
-            System.out.println("*******************************");
+            System.out.println("*");
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Marca: " + marca);
-                    System.out.println("Placa: " + placa);
-                    System.out.println("Modelo: " + modelo);
-                    System.out.println("Horário de entrada: " + horarioEntrada);
-                    System.out.println("Horário de saida: " + horarioSaida);
+                    if (!placa.isEmpty()) {
+                        System.out.println("Marca: " + marca);
+                        System.out.println("Placa: " + placa);
+                        System.out.println("Modelo: " + modelo);
+                        System.out.println("Horário de entrada: " + horarioEntrada);
+                        System.out.println("Horário de saída: " + horarioSaida);
 
+                        if (!preco.equals("-")) {
+                            System.out.println("Valor pago: R$" + preco);
+                        }
+
+                    } else {
+                        System.out.println("Nenhum carro cadastrado.");
+                    }
                     break;
                 case 2:
                     if (!placa.isEmpty()) {
-                        System.out.println("Nenhuma vaga disponivel no momento");
+                        System.out.println("Nenhuma vaga disponível no momento.");
                     } else {
                         System.out.print("Digite a marca do carro: ");
                         marca = leitorTexto.nextLine();
@@ -49,29 +57,42 @@ public class Main {
                         System.out.print("Digite o horário de entrada (HH:mm): ");
                         horarioEntrada = leitorTexto.nextLine();
 
+                        horarioSaida = "-";
+                        preco = "-";
+
                         System.out.println("Carro cadastrado com sucesso!");
                     }
-
                     break;
                 case 3:
-                    String placaPesquisa;
-                    System.out.print("Digite a placa do carro que deseja atualizar: ");
-                    placaPesquisa = leitorTexto.nextLine();
-
-                    if (placaPesquisa.equals(placa)) {
-                        System.out.print("Digite o horário de saída: ");
-                        horarioSaida = leitorTexto.nextLine();
-
-                        System.out.println("\nHorário de entrada: " + horarioEntrada +
-                                "\nHorário de saída: " + horarioSaida);
-
-                        System.out.println("\nDigite o preço que ficou: ");
-                        System.out.print("R$ ");
-                        preco = leitorTexto.nextLine();
-
-                        System.out.println("Total: R$" + preco);
+                    if (placa.isEmpty()) {
+                        System.out.println("Nenhum carro para dar saída.");
                     } else {
-                        System.out.println("Carro não encontrado.");
+                        System.out.print("Digite a placa do carro que deseja dar saída: ");
+                        String placaPesquisa = leitorTexto.nextLine();
+
+                        if (placaPesquisa.equals(placa)) {
+                            System.out.print("Digite o horário de saída: ");
+                            horarioSaida = leitorTexto.nextLine();
+
+                            System.out.println("\nHorário de entrada: " + horarioEntrada +
+                                    "\nHorário de saída: " + horarioSaida);
+
+                            System.out.print("\nDigite o valor a ser pago: R$ ");
+                            preco = leitorTexto.nextLine();
+
+                            System.out.println("Total pago: R$" + preco);
+
+                            marca = "";
+                            modelo = "";
+                            placa = "";
+                            horarioEntrada = "";
+                            horarioSaida = "-";
+                            preco = "-";
+
+                            System.out.println("Vaga liberada com sucesso!");
+                        } else {
+                            System.out.println("Carro não encontrado.");
+                        }
                     }
                     break;
                 case 4:
